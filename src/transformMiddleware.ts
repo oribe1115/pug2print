@@ -16,8 +16,15 @@ export const transformMiddleware = (pluginContainer: PluginContainer): NextHandl
       return null
     }
 
+    let mime = undefined
+    if (/\.[jt]s$/.test(idResult.id)){
+        mime = 'application/javascript'
+    }else if (/\.html$/.test(idResult.id)){
+        mime = 'text/html'
+    }
+
     return {
-      mime: /\.[jt]s$/.test(idResult.id) ? 'application/javascript' : undefined,
+      mime: mime,
       content: transformResult.code
     }
   }
@@ -26,6 +33,8 @@ export const transformMiddleware = (pluginContainer: PluginContainer): NextHandl
     if (req.method !== 'GET') {
       return next()
     }
+
+    // res.setHeader("Content-Type", "text/html")
 
     let url: URL
     try {

@@ -33,7 +33,6 @@ export const transformMiddleware = (pluginContainer: PluginContainer): NextHandl
     } catch (e) {
       return next(e)
     }
-
     const pathname = url.pathname
 
     try {

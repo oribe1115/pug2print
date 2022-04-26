@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "cac": "^6.7.12",
+    "child_process": "^1.0.2",
     "connect": "^3.7.0",
     "connect-history-api-fallback": "^1.6.0",
     "node-html-parser": "^5.3.3",

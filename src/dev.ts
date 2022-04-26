@@ -4,6 +4,7 @@ import sirv from 'sirv'
 import { createPluginContainer } from './pluginContainer'
 import { getPlugins } from './plugins'
 import { transformMiddleware } from './transformMiddleware'
+import { exec } from "child_process"
 
 export const startDev = () => {
   const server = connect()
@@ -23,4 +24,12 @@ export const startDev = () => {
   server.use(historyApiFallback() as any) // ファイルが存在しなかったときにindex.htmlを返すようにするミドルウェア
 
   console.log('dev server running at http://localhost:3000')
+
+  exec("vivliostyle preview http://localhost:3000/index.html --http", (err, stdout, stderr) => {
+    if (err) {
+      console.log(`stderr: ${stderr}`)
+      return
+    }
+    console.log(`stdout: ${stdout}`)
+  })
 }

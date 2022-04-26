@@ -23,8 +23,6 @@ export const startDev = () => {
   )
   server.use(historyApiFallback() as any) // ファイルが存在しなかったときにindex.htmlを返すようにするミドルウェア
 
-  console.log('dev server running at http://localhost:3000')
-
   exec("vivliostyle preview http://localhost:3000/index.html --http", (err, stdout, stderr) => {
     if (err) {
       console.log(`stderr: ${stderr}`)
@@ -32,4 +30,6 @@ export const startDev = () => {
     }
     console.log(`stdout: ${stdout}`)
   })
+
+  console.log('dev server running at http://localhost:3000')
 }

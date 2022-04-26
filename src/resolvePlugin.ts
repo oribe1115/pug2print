@@ -3,20 +3,37 @@ import * as path from 'node:path'
 import * as fs from 'node:fs/promises'
 
 const root = process.cwd()
+const extensions = ['', '.ts', '.js']
+
+const fileExists = async (p: string) => {
+    try {
+      const stat = await fs.stat(p)
+      if (stat.isFile()) {
+        return true
+      }
+    } catch {}
+    return false
+}
 
 export const resolve = (): Plugin => {
   return {
     name: 'pug2print:resolve',
     async resolveId(id: string) {
-      // idのファイルが存在すれば絶対パスのidを返します
-      const absolutePath = path.resolve(root, `.${id}`)
-      try {
-        const stat = await fs.stat(absolutePath)
-        if (stat.isFile()) {
-          return absolutePath
-        }
-      } catch {}
-      return null
+        for (const ext of extensions) {
+            const absolutePath = path.resolve(root, `.${id}${ext}`)
+            if (await fileExists(absolutePath)) {
+              return absolutePath
+            }
+          }
+    
+          if (id.endsWith('/')) {
+            const absolutePath = path.resolve(root, `.${id}index.html`)
+            if (await fileExists(absolutePath)) {
+              return absolutePath
+            }
+          }
+    
+          return null
     },
     async load(id: string) {
       // パスのファイルを読み出します

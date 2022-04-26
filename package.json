@@ -19,6 +19,7 @@
     "cac": "^6.7.12",
     "connect": "^3.7.0",
     "connect-history-api-fallback": "^1.6.0",
+    "node-html-parser": "^5.3.3",
     "rollup-plugin-esbuild": "^4.9.1",
     "sirv": "^2.0.2"
   },

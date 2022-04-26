@@ -5,10 +5,13 @@ import { createPluginContainer } from './pluginContainer'
 import { getPlugins } from './plugins'
 import { transformMiddleware } from './transformMiddleware'
 import { exec } from "child_process"
+import cors from "cors"
 
 export const startDev = () => {
   const server = connect()
   server.listen(3000, 'localhost')
+
+  server.use(cors())
 
   const plugins = getPlugins()
   const pluginContainer = createPluginContainer(plugins)

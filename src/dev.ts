@@ -6,6 +6,7 @@ import { getPlugins } from './plugins'
 import { transformMiddleware } from './transformMiddleware'
 import { exec } from "child_process"
 import { setupReloadServer as setupWsServer } from './reloadPlugin'
+import { createFileWatcher } from './fileWatcher'
 
 export const startDev = () => {
   const server = connect()
@@ -35,8 +36,8 @@ export const startDev = () => {
 
   console.log('dev server running at http://localhost:3000')
 
-  setTimeout(() => {
-    console.log('reload!')
+  createFileWatcher((eventName, path) => {
+    console.log(`Detected file change (${eventName}) reloading!: ${path}`)
     ws.send({ type: 'reload' })
-  }, 1000 * 5) // とりあえず5秒後にリロードするようにする
+  })
 }

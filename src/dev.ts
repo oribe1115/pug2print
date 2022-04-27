@@ -5,10 +5,12 @@ import { createPluginContainer } from './pluginContainer'
 import { getPlugins } from './plugins'
 import { transformMiddleware } from './transformMiddleware'
 import { exec } from "child_process"
+import { setupReloadServer as setupWsServer } from './reloadPlugin'
 
 export const startDev = () => {
   const server = connect()
   server.listen(3000, 'localhost')
+  const ws = setupWsServer()
 
   const plugins = getPlugins()
   const pluginContainer = createPluginContainer(plugins)
@@ -32,4 +34,9 @@ export const startDev = () => {
   })
 
   console.log('dev server running at http://localhost:3000')
+
+  setTimeout(() => {
+    console.log('reload!')
+    ws.send({ type: 'reload' })
+  }, 1000 * 5) // とりあえず5秒後にリロードするようにする
 }

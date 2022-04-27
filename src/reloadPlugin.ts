@@ -1,10 +1,18 @@
 import type { Plugin } from 'rollup'
 import { parse } from 'node-html-parser'
+import WebSocket, { WebSocketServer } from 'ws'
 
+const port = 24678
 const virtualScriptId = '/@pug2print:reload/script.js'
 const virtualScript = `
-  console.log('bar')
-` // とりあえずbarとコンソールに出力することにする
+  const ws = new WebSocket('ws://localhost:${port}/')
+  ws.addEventListener('message', ({ data }) => {
+    const msg = JSON.parse(data)
+    if (msg.type === 'reload') {
+      location.reload() // リロードというメッセージが来たらページをリロードする
+    }
+  })
+`
 
 export const reload = (): Plugin => {
   return {
@@ -31,6 +39,29 @@ export const reload = (): Plugin => {
         ?.insertAdjacentHTML('beforeend', `<script type="module" src="${virtualScriptId}">`)
 
       return doc.toString()
+    }
+  }
+}
+
+interface Data {
+  type: string
+}
+
+export const setupReloadServer = () => {
+  const wss = new WebSocketServer({
+    port,
+    host: 'localhost'
+  })
+
+  let ws: WebSocket
+  wss.on('connection', connectedWs => {
+    ws = connectedWs
+  })
+
+  return {
+    send(data: Data) {
+      if (!ws) return
+      ws.send(JSON.stringify(data))
     }
   }
 }

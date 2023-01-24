@@ -4,7 +4,6 @@ import sirv from 'sirv'
 import { createPluginContainer } from './pluginContainer'
 import { getPlugins } from './plugins'
 import { transformMiddleware } from './transformMiddleware'
-import { exec } from "child_process"
 import { setupReloadServer as setupWsServer } from './reloadPlugin'
 import { createFileWatcher } from './fileWatcher'
 import { renderPug } from './pugRenderer'
@@ -27,17 +26,8 @@ export const startDev = () => {
   )
   server.use(historyApiFallback() as any) // ファイルが存在しなかったときにindex.htmlを返すようにするミドルウェア
 
-  const root = process.cwd()
   renderPug('index.pug', 'dist')
   
-  exec("vivliostyle preview http://localhost:3000/dist/index.html --http", (err, stdout, stderr) => {
-    if (err) {
-      console.log(`stderr: ${stderr}`)
-      return
-    }
-    console.log(`stdout: ${stdout}`)
-  })
-
   console.log('dev server running at http://localhost:3000')
   console.log('open https://vivliostyle.org/viewer/#src=http://localhost:3000/dist/index.html')
 

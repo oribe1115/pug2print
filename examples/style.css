@@ -1,0 +1,36 @@
+@page { 
+    size: a4;
+    margin: 0;
+}
+
+body{
+    padding: 40px 80px;
+    max-width: 100%;
+    font-family: 'Open Sans', 'Helvetica Neue', 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
+}
+
+.info{
+    display: flex;
+    align-items: center;
+}
+
+.name::before{
+    content: "　";
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+p{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+p::before{
+    content: "　";
+}

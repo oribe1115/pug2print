@@ -39,6 +39,7 @@ export const startDev = () => {
   })
 
   console.log('dev server running at http://localhost:3000')
+  console.log('open https://vivliostyle.org/viewer/#src=http://localhost:3000/dist/index.html')
 
   createFileWatcher((eventName, path) => {
     console.log(`Detected file change (${eventName}) reloading!: ${path}`)

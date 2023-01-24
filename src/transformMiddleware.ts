@@ -35,6 +35,7 @@ export const transformMiddleware = (pluginContainer: PluginContainer): NextHandl
     }
 
     // res.setHeader("Content-Type", "text/html")
+    res.setHeader('Access-Control-Allow-Origin', '*')
 
     let url: URL
     try {

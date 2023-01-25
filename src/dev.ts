@@ -21,7 +21,10 @@ export const startDev = () => {
   server.use(
     sirv(undefined, {
       dev: true,
-      etag: true
+      etag: true,
+      setHeaders(res, pathname, stats) {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+      },
     })
   )
   server.use(historyApiFallback() as any) // ファイルが存在しなかったときにindex.htmlを返すようにするミドルウェア

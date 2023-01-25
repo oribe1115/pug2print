@@ -34,3 +34,8 @@ p{
 p::before{
     content: "　";
 }
+
+.image{
+    margin-top: 2em;
+    text-align: center;
+}

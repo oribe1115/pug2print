@@ -45,7 +45,7 @@ export const transformMiddleware = (pluginContainer: PluginContainer): NextHandl
     }
     const pathname = url.pathname
 
-    if (!/\.([jt]s)\|(html)$/.test(pathname)){
+    if (!/\.([jt]s|html)$/.test(pathname)){
       // transformする必要がない普通のファイルはsirvで配信
       return next()
     }
